@@ -1,0 +1,94 @@
+.container {
+  margin: auto;
+  padding: 20px;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  font-family: Arial;
+  font-size: calc(3px + 2vmin);
+}
+
+.createForm {
+  border: solid, green;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+h1 {
+  margin: 0 auto;
+}
+
+.dataTable {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.dataTable thead tr {
+  background-color: #009879;
+  color: #ffffff;
+  text-align: left;
+  font-weight: bold;
+}
+
+.dataTable th,
+.dataTable td {
+  padding: 12px 15px;
+}
+
+.dataTable tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+.dataTable tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.dataTable tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+
+.dataTable tbody tr.active-row {
+  font-weight: bold;
+  color: #009879;
+}
+
+button {
+  background-color: red;
+  width: 100%;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  padding: 10px 10px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.buttonPanel {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.custom-select {
+  min-width: 50px;
+}
+
+.custom-select select {
+  appearance: none;
+  width: 100%;
+  /* padding: 0.675em 6em 0.675em 1em; */
+  padding: 0.4em 1em 0.4em 1em;
+  background-color: #ffffff;
+  border: 1px solid #caced1;
+  border-radius: 0.25rem;
+  color: #000;
+  cursor: pointer;
+}

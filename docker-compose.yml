@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  frontend:
+    container_name: front-end
+    image: front-end
+    build:
+      context: ./tech-challenge-frontend
+    volumes:
+      - ./tech-challenge-frontend:/src
+      - ./tech-challenge-frontend:/node_modules
+    ports:
+      - 3000:3000
+  backend:
+    container_name: andy-backend
+    image: andy-backend
+    build:
+      context: ./tech-challenge-backend
+    volumes:
+      - ./tech-challenge-backend:/src
+    ports:
+      - 8080:8080     
