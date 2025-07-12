@@ -3,12 +3,12 @@ export type Task = {
   title: string
   description: string
   status: string
-  dueDate: string
+  dueDate: Date
 }
 
 export type TaskInput = {
   title: string
   description: string
   status: string
-  dueDate: string
+  dueDate: Date
 }

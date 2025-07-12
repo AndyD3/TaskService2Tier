@@ -35,16 +35,17 @@ function TaskManager() {
       {isLoading && <div>Loading...</div>}
 
       <div>
+        <div className='instructions'>
+        Tasks can be deleted or created or have their status changed. 
+        </div>
         {tasks && (
           <TaskTable
             tasks={tasks}
             deleteTask={deleteTask}
             editTask={updateTask}
+            createTask={addTask}
           />
         )}
-      </div>
-      <div>
-        <TaskCreateForm createTask={addTask} />
       </div>
     </div>
   )

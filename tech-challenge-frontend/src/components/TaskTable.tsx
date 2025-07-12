@@ -1,14 +1,21 @@
 import React from 'react'
 import { Task } from '../types'
 import { StatusOptions } from '../constants'
+import { CreateTaskRow } from './CreateTaskRow'
 
 type Props = {
   tasks: Task[]
   deleteTask: (id: number) => void
   editTask: (task: Task) => void
+  createTask: (task: Task) => void
 }
 
-export const TaskTable = ({ tasks, deleteTask, editTask }: Props) => {
+export const TaskTable = ({
+  tasks,
+  deleteTask,
+  editTask,
+  createTask,
+}: Props) => {
   const onOptionChangeHandler = (task: Task, event: Event | undefined) => {
     task.status = (event?.target as HTMLInputElement).value
 
@@ -37,7 +44,7 @@ export const TaskTable = ({ tasks, deleteTask, editTask }: Props) => {
               <td>{task.title}</td>
 
               <td>{task.description}</td>
-              <td>{task.dueDate}</td>
+              <td>{new Date(task.dueDate).toLocaleDateString()}</td>
               <td className="custom-select">
                 <select
                   value={task.status}
@@ -49,11 +56,14 @@ export const TaskTable = ({ tasks, deleteTask, editTask }: Props) => {
                 </select>
               </td>
               <td className="buttonPanel">
-                <button onClick={() => deleteTask(task.id)}>Delete</button>
+                <button className="caution" onClick={() => deleteTask(task.id)}>
+                  Delete
+                </button>
               </td>
             </tr>
           ))
         )}
+        <CreateTaskRow createTask={createTask} />
       </tbody>
     </table>
   )
