@@ -45,8 +45,9 @@ export const TaskTable = ({
 
               <td>{task.description}</td>
               <td>{new Date(task.dueDate).toLocaleDateString()}</td>
-              <td className="custom-select">
+              <td>
                 <select
+                  className="custom-select"
                   value={task.status}
                   onChange={() => onOptionChangeHandler(task, event)}
                 >

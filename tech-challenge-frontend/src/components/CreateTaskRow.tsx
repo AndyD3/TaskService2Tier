@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Task, TaskInput } from '../types'
 
 import DatePicker from 'react-datepicker'
+import { StatusOptions } from '../constants'
 import 'react-datepicker/dist/react-datepicker.css'
 
 type Props = {
@@ -14,7 +15,7 @@ export const CreateTaskRow = ({ createTask }: Props) => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    status: '',
+    status: ''
   })
 
   const handleChange = (e: { target: { name: any; value: any } }) => {
@@ -23,7 +24,6 @@ export const CreateTaskRow = ({ createTask }: Props) => {
   }
 
   const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
-    console.log('handleSubmit ', event)
 
     event.preventDefault()
 
@@ -60,6 +60,7 @@ export const CreateTaskRow = ({ createTask }: Props) => {
       <td>
         <DatePicker
           id="dueDateText"
+          name="dueDate"
           showIcon
           dateFormat="dd/MM/YYYY"
           selected={dueDate}
@@ -68,15 +69,18 @@ export const CreateTaskRow = ({ createTask }: Props) => {
       </td>
 
       <td>
-        <input
-          type="text"
+        <select
+          className="custom-select"
           name="status"
-          value={formData.status}
           onChange={handleChange}
-        />
+        >
+          {StatusOptions.map((option, index) => {
+            return <option value={option} key={index}>{option}</option>
+          })}
+        </select>
       </td>
 
-      <td>
+      <td className="buttonPanel">
         <button className="cta" onClick={handleSubmit}>
           Create
         </button>

@@ -24,13 +24,11 @@ h1 {
 .instructions {
   padding-top: 1em;
 }
-
 .dataTable {
-  border-collapse: collapse;
-  margin: 25px 0;
-  font-size: 0.9em;
+  table-layout: auto;
+  width: 90%;
+  margin: 0 auto;
   font-family: sans-serif;
-  min-width: 400px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
@@ -43,6 +41,9 @@ h1 {
 
 .dataTable th,
 .dataTable td {
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  word-wrap: break-word;
   padding: 12px 15px;
 }
 
@@ -64,6 +65,7 @@ h1 {
 
 button {
   width: 100%;
+  font-size: calc(3px + 2vmin);
   border-radius: 5px;
   border: none;
   color: white;
@@ -82,21 +84,31 @@ button {
 }
 
 .buttonPanel {
+  white-space: nowrap;
   display: flex;
   align-items: center;
   flex-direction: row;
   align-items: flex-start;
 }
 
+input {
+  font-size: calc(3px + 2vmin);
+  width:100%
+}
+
 .custom-select {
-  min-width: 50px;
+  font-size: calc(3px + 2vmin);
+}
+
+.react-datepicker-wrapper {
+  width:70%;
+  display: block;
 }
 
 .custom-select select {
   appearance: none;
   width: 100%;
-  /* padding: 0.675em 6em 0.675em 1em; */
-  padding: 0.4em 1em 0.4em 1em;
+  padding: 0.675em 6em 0.675em 1em;
   background-color: #ffffff;
   border: 1px solid #caced1;
   border-radius: 0.25rem;
