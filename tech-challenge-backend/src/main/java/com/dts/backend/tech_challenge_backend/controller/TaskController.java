@@ -30,8 +30,6 @@ public class TaskController {
         return ResponseEntity.ok(product);
     }
 
-    // date arrives as 07/10/2025
-
     @PostMapping
     public ResponseEntity<Task> create(@RequestBody Task taskDTO) {
         Task createdProduct = taskService.createOrUpdate(taskDTO);
@@ -40,8 +38,8 @@ public class TaskController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Task> update(@PathVariable Long id, @RequestBody Task taskDTO) {
-        System.out.println(taskDTO);
-        Task updatedProduct = taskService.createOrUpdate(taskDTO); //todo removed id from call so hope gets from dto
+        taskDTO.setId(id);
+        Task updatedProduct = taskService.createOrUpdate(taskDTO); //todo convert to using id from path..
         return ResponseEntity.ok(updatedProduct);
     }
 

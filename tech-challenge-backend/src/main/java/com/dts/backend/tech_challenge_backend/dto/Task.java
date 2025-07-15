@@ -2,6 +2,7 @@ package com.dts.backend.tech_challenge_backend.dto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.time.LocalDate;
@@ -11,8 +12,9 @@ import java.util.Objects;
 @Entity
 public class Task {
 
-    private @Id
-    @GeneratedValue Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id = null;
 
     private String title;
     private String description;
