@@ -81,7 +81,9 @@ export const CreateTaskRow = ({ createTask }: Props) => {
       </td>
 
       <td className="buttonPanel">
-        <button className="cta" onClick={handleSubmit}>
+        <button disabled={formData.description=='' || formData.title==''} 
+        className="cta" 
+        onClick={handleSubmit}>
           Create
         </button>
       </td>
