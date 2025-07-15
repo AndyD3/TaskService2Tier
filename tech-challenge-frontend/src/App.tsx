@@ -2,13 +2,12 @@ import React, { useState } from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import { useDeleteTask } from './hooks/useDeleteTask'
-import { useFetchTasks } from './hooks/useFetchTasks'
-import { useAddTask } from './hooks/useAddTask'
+import { useReadTasks } from './hooks/useReadTasks'
+import { useCreateTask } from './hooks/useCreateTask'
 import { TaskInput } from './types'
 import './App.css'
 import { TaskTable } from './components/TaskTable'
 import { useUpdateTask } from './hooks/useUpdateTask'
-import { TaskCreateForm } from './components/TaskCreateForm'
 
 const queryClient = new QueryClient()
 
@@ -22,8 +21,8 @@ export default function App() {
 
 function TaskManager() {
   const { mutate: deleteTask } = useDeleteTask()
-  const { data: tasks, isLoading, isError } = useFetchTasks()
-  const { mutate: addTask } = useAddTask()
+  const { data: tasks, isLoading, isError } = useReadTasks()
+  const { mutate: addTask } = useCreateTask()
   const { mutate: updateTask } = useUpdateTask()
 
   if (isError) return 'An error has occurred: ' + isError
@@ -36,7 +35,7 @@ function TaskManager() {
 
       <div>
         <div className='instructions'>
-        Tasks can be deleted or created or have their status changed. 
+        Tasks can be deleted, created or have their status changed. 
         </div>
         {tasks && (
           <TaskTable

@@ -5,14 +5,14 @@ import { TaskInput } from '../types'
 import { AxiosResponse } from 'axios'
 import axiosClient from 'axios'
 
-const addTask = async (task: TaskInput): Promise<AxiosResponse<TaskInput>> => {
+const createTask = async (task: TaskInput): Promise<AxiosResponse<TaskInput>> => {
   return await axiosClient.post<TaskInput>(
     'http://localhost:8080/api/tasks',
     task
   )
 }
 
-export const useAddTask = (): UseBaseMutationResult<
+export const useCreateTask = (): UseBaseMutationResult<
   AxiosResponse<TaskInput>,
   unknown,
   TaskInput,
@@ -21,7 +21,7 @@ export const useAddTask = (): UseBaseMutationResult<
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (task: TaskInput) => addTask(task),
+    mutationFn: (task: TaskInput) => createTask(task),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] })
     },
