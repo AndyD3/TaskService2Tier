@@ -12,11 +12,13 @@ type Props = {
 export const CreateTaskRow = ({ createTask }: Props) => {
   const [dueDate, setDueDate] = useState(new Date())
 
-  const [formData, setFormData] = useState({
+  const emptyFormData= {
     title: '',
     description: '',
     status: ''
-  })
+  }
+
+  const [formData, setFormData] = useState(emptyFormData)
 
   const handleChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target
@@ -37,6 +39,10 @@ export const CreateTaskRow = ({ createTask }: Props) => {
     console.log('newTask:', newTask)
 
     createTask(newTask)
+
+    // optimistically assume creation went fine so clear fields.
+    // todo add mechanism to check success
+    setFormData(emptyFormData)
   }
 
   return (

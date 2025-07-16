@@ -22,7 +22,7 @@ h1 {
 }
 
 .instructions {
-  padding-top: 1em;
+  padding: 1em;
 }
 .dataTable {
   table-layout: auto;

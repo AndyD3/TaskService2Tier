@@ -22,14 +22,16 @@ export default function App() {
 function TaskManager() {
   const { mutate: deleteTask } = useDeleteTask()
   const { data: tasks, isLoading, isError } = useReadTasks()
-  const { mutate: addTask } = useCreateTask()
-  const { mutate: updateTask } = useUpdateTask()
+  const { mutate: addTask, status: statusCreateTask } = useCreateTask()
+  const { mutate: updateTask, status: statusUpdateTask} = useUpdateTask()
 
-  if (isError) return 'An error has occurred: ' + isError
+  const errorOccured=isError || statusCreateTask=='error' || statusUpdateTask=='error';
 
   return (
     <div className="container">
       <h1>Task Manager</h1>
+
+      {errorOccured && <div>An error has occurred...</div>}
 
       {isLoading && <div>Loading...</div>}
 
