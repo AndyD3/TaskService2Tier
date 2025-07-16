@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.equalTo;
 @SpringBootTest
 public class TaskServiceUnitTest {
 
-    private Random r = new Random();
+    private final Random r = new Random();
 
     @Autowired
     private TaskService taskService;
@@ -29,12 +29,12 @@ public class TaskServiceUnitTest {
     @Test
     public void shouldCreateSpecifiedTask() {
         //TODO not happy with this..should refresh DB
-        int previousSize=taskService.getAll().size();
+        int previousSize = taskService.getAll().size();
 
         Task newTask = new Task("Task 5", "get started", "in progress", LocalDate.now());
-        taskService.createOrUpdate(newTask);
+        taskService.create(newTask);
 
-        assertThat(taskService.getAll().size(), equalTo(previousSize+1));
+        assertThat(taskService.getAll().size(), equalTo(previousSize + 1));
     }
 
     @Test
@@ -48,17 +48,17 @@ public class TaskServiceUnitTest {
     public void shouldUpdateTask() {
 
         long taskId = 1;
-        Task expectedItem = new Task("Task 1"+r.nextInt(), "get started"+r.nextInt(), "in progress", LocalDate.now());
+        Task expectedItem = new Task("Task 1" + r.nextInt(), "get started" + r.nextInt(), "in progress", LocalDate.now());
         expectedItem.setId(taskId);
 
-        taskService.createOrUpdate(expectedItem);
+        taskService.update(expectedItem);
         assertThat(taskService.getById(taskId).get(), equalTo(expectedItem));
     }
 
     @Test
     public void shouldDeleteTask() {
-        int previousSize =taskService.getAll().size();
+        int previousSize = taskService.getAll().size();
         taskService.delete(4L);
-        assertThat(taskService.getAll().size(), equalTo(previousSize -1));
+        assertThat(taskService.getAll().size(), equalTo(previousSize - 1));
     }
 }

@@ -32,14 +32,14 @@ public class TaskController {
 
     @PostMapping
     public ResponseEntity<Task> create(@RequestBody Task taskDTO) {
-        Task createdProduct = taskService.createOrUpdate(taskDTO);
+        Task createdProduct = taskService.create(taskDTO);
         return ResponseEntity.ok(createdProduct);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Task> update(@PathVariable Long id, @RequestBody Task taskDTO) {
         taskDTO.setId(id);
-        Task updatedProduct = taskService.createOrUpdate(taskDTO); //todo convert to using id from path..
+        Task updatedProduct = taskService.update(taskDTO);
         return ResponseEntity.ok(updatedProduct);
     }
 

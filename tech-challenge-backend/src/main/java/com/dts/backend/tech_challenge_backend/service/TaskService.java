@@ -1,6 +1,7 @@
 package com.dts.backend.tech_challenge_backend.service;
 
 import com.dts.backend.tech_challenge_backend.dto.Task;
+import com.dts.backend.tech_challenge_backend.exception.ResourceNotFoundException;
 import com.dts.backend.tech_challenge_backend.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,11 +26,17 @@ public class TaskService {
         return taskRepository.findById(id);
     }
 
-    public Task createOrUpdate(Task task) {
+    public Task create(Task task) {
+        return taskRepository.save(task);
+    }
+
+    public Task update(Task task) {
+        taskRepository.findById(task.getId()).orElseThrow(ResourceNotFoundException::new);
         return taskRepository.save(task);
     }
 
     public void delete(Long id) {
+        taskRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
         taskRepository.deleteById(id);
     }
 }
