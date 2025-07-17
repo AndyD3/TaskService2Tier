@@ -1,24 +1,26 @@
 package com.dts.backend.tech_challenge_backend.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
 
-@Entity
-public class Task {
+public class TaskDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id = null;
 
+    @NotBlank(message = "Please provide a title")
     private String title;
+
+    @NotBlank(message = "Please provide a description")
     private String description;
+
+    @NotBlank(message = "Please provide a status")
     private String status;
+
+    @NotNull(message = "Please provide a due date")
     private LocalDate dueDate;
 
     public Long getId() {
@@ -61,22 +63,29 @@ public class Task {
         this.dueDate = dueDate;
     }
 
-    public Task(String title, String description, String status, LocalDate dueDate) {
+    public TaskDTO(String title, String description, String status, LocalDate dueDate) {
         this.title = title;
         this.description = description;
         this.status = status;
         this.dueDate = dueDate;
     }
 
-    //todo remove?
-    public Task() {
+    public TaskDTO(long id, String title, String description, String status, LocalDate dueDate) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+        this.dueDate = dueDate;
+    }
+
+    public TaskDTO() {
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Task task = (Task) o;
+        TaskDTO task = (TaskDTO) o;
         return Objects.equals(id, task.id) && Objects.equals(title, task.title) && Objects.equals(description, task.description) && Objects.equals(status, task.status) && Objects.equals(dueDate, task.dueDate);
     }
 

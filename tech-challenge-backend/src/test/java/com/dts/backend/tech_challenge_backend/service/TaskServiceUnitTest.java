@@ -1,9 +1,10 @@
 package com.dts.backend.tech_challenge_backend.service;
 
-import com.dts.backend.tech_challenge_backend.dto.Task;
+import com.dts.backend.tech_challenge_backend.dto.TaskDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import util.TaskMappings;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -22,7 +23,7 @@ public class TaskServiceUnitTest {
 
     @Test
     public void shouldCreateInitialRecordsAtStartup() {
-        List<Task> items = taskService.getAll();
+        List<TaskDTO> items = taskService.getAll();
         assertThat(items.size(), equalTo(4));
     }
 
@@ -31,7 +32,7 @@ public class TaskServiceUnitTest {
         //TODO not happy with this..should refresh DB
         int previousSize = taskService.getAll().size();
 
-        Task newTask = new Task("Task 5", "get started", "in progress", LocalDate.now());
+        TaskDTO newTask = new TaskDTO("Task 5", "get started", "in progress", LocalDate.now());
         taskService.create(newTask);
 
         assertThat(taskService.getAll().size(), equalTo(previousSize + 1));
@@ -40,19 +41,18 @@ public class TaskServiceUnitTest {
     @Test
     public void shouldReturnSpecifiedTask() {
         long taskId = 2;
-        Task item = taskService.getById(taskId).get();
-        assertThat(item, equalTo(SeedDatabase.task2));
+        TaskDTO item = taskService.getById(taskId);
+        assertThat(item, equalTo(TaskMappings.mapToDTO(SeedDatabase.task2)));
     }
 
     @Test
     public void shouldUpdateTask() {
 
         long taskId = 1;
-        Task expectedItem = new Task("Task 1" + r.nextInt(), "get started" + r.nextInt(), "in progress", LocalDate.now());
-        expectedItem.setId(taskId);
+        TaskDTO expectedTask = new TaskDTO(taskId, "Task 1" + r.nextInt(), "get started" + r.nextInt(), "in progress", LocalDate.now());
 
-        taskService.update(expectedItem);
-        assertThat(taskService.getById(taskId).get(), equalTo(expectedItem));
+        TaskDTO actualTask = taskService.update(expectedTask);
+        assertThat(actualTask, equalTo(expectedTask));
     }
 
     @Test

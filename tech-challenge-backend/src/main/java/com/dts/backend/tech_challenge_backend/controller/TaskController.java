@@ -1,11 +1,12 @@
 package com.dts.backend.tech_challenge_backend.controller;
 
-import com.dts.backend.tech_challenge_backend.dto.Task;
+import com.dts.backend.tech_challenge_backend.dto.TaskDTO;
 import com.dts.backend.tech_challenge_backend.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -13,33 +14,25 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public class TaskController {
 
-    //todo use DTO not task
-
     @Autowired
     private TaskService taskService;
 
     @GetMapping
-    public ResponseEntity<List<Task>> getAll() {
-        List<Task> products = taskService.getAll();
+    public ResponseEntity<List<TaskDTO>> getAll() {
+        List<TaskDTO> products = taskService.getAll();
         return ResponseEntity.ok(products);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Task> getById(@PathVariable Long id) {
-        Task product = taskService.getById(id).get(); //todo resolve
-        return ResponseEntity.ok(product);
-    }
-
     @PostMapping
-    public ResponseEntity<Task> create(@RequestBody Task taskDTO) {
-        Task createdProduct = taskService.create(taskDTO);
+    public ResponseEntity<TaskDTO> create(@RequestBody @Valid TaskDTO taskDTO) {
+        TaskDTO createdProduct = taskService.create(taskDTO);
         return ResponseEntity.ok(createdProduct);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Task> update(@PathVariable Long id, @RequestBody Task taskDTO) {
+    public ResponseEntity<TaskDTO> update(@PathVariable Long id, @RequestBody @Valid TaskDTO taskDTO) {
         taskDTO.setId(id);
-        Task updatedProduct = taskService.update(taskDTO);
+        TaskDTO updatedProduct = taskService.update(taskDTO);
         return ResponseEntity.ok(updatedProduct);
     }
 

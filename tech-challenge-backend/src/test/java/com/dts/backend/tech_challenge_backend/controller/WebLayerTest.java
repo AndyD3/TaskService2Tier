@@ -1,6 +1,6 @@
 package com.dts.backend.tech_challenge_backend.controller;
 
-import com.dts.backend.tech_challenge_backend.dto.Task;
+import com.dts.backend.tech_challenge_backend.dto.TaskDTO;
 import com.dts.backend.tech_challenge_backend.exception.ResourceNotFoundException;
 import com.dts.backend.tech_challenge_backend.service.TaskService;
 import org.junit.jupiter.api.Test;
@@ -40,10 +40,10 @@ public class WebLayerTest {
     @Test
     public void shouldGetAllAsList() throws Exception {
 
-        Task task = new Task("title" + r.nextInt(), "desc" + r.nextInt(), "status" + r.nextInt(), LocalDate.now());
-        Task task2 = new Task("title2" + r.nextInt(), "desc2" + r.nextInt(), "status2" + r.nextInt(), LocalDate.now());
+        TaskDTO task = new TaskDTO(1L, "title" + r.nextInt(), "desc" + r.nextInt(), "status" + r.nextInt(), LocalDate.now());
+        TaskDTO task2 = new TaskDTO(2L, "title2" + r.nextInt(), "desc2" + r.nextInt(), "status2" + r.nextInt(), LocalDate.now());
 
-        List<Task> taskList = List.of(task, task2);
+        List<TaskDTO> taskList = List.of(task, task2);
 
         Mockito.when(service.getAll()).thenReturn(taskList);
 
@@ -63,15 +63,11 @@ public class WebLayerTest {
         verify(service, times(1)).getAll();
     }
 
-    @Test
-    public void shouldGetByID() throws Exception {
-        //TODO remove this and code
-    }
 
     @Test
     public void shouldCreateAndReturnCreatedTask() throws Exception {
 
-        Task task = new Task("title" + r.nextInt(), "desc" + r.nextInt(), "status" + r.nextInt(), LocalDate.now());
+        TaskDTO task = new TaskDTO(5L, "title" + r.nextInt(), "desc" + r.nextInt(), "status" + r.nextInt(), LocalDate.now());
 
         Mockito.when(service.create(task)).thenReturn(task);
 
@@ -87,9 +83,30 @@ public class WebLayerTest {
     }
 
     @Test
+    public void shouldReturnValidationResponseWhenCreatedTaskFailsValidation() throws Exception {
+
+        TaskDTO task = new TaskDTO(0,
+                "", "", "status" + r.nextInt(), LocalDate.now());
+
+        Mockito.when(service.create(task)).thenReturn(task);
+
+        //TODO proper error message....
+
+        this.mockMvc.perform(post("/api/tasks").content(taskMapper.getRequestJson(task)).contentType(MediaType.APPLICATION_JSON)).andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.title", is(task.getTitle())))
+                .andExpect(jsonPath("$.description", is(task.getDescription())))
+                .andExpect(jsonPath("$.status", is(task.getStatus())))
+                .andExpect(jsonPath("$.dueDate", is(task.getDueDate().toString())));
+
+
+        verify(service, times(0)).create(task);
+    }
+
+    @Test
     public void shouldUpdate() throws Exception {
 
-        Task task = new Task("title" + r.nextInt(), "desc" + r.nextInt(), "status" + r.nextInt(), LocalDate.now());
+        TaskDTO task = new TaskDTO(0, "title" + r.nextInt(), "desc" + r.nextInt(), "status" + r.nextInt(), LocalDate.now());
         task.setId(1L);
 
         Mockito.when(service.update(task)).thenReturn(task);
@@ -107,7 +124,7 @@ public class WebLayerTest {
     @Test
     public void shouldErrorForUpdateWhenTaskNotFound() throws Exception {
 
-        Task task = new Task("title" + r.nextInt(), "desc" + r.nextInt(), "status" + r.nextInt(), LocalDate.now());
+        TaskDTO task = new TaskDTO(0, "title" + r.nextInt(), "desc" + r.nextInt(), "status" + r.nextInt(), LocalDate.now());
         task.setId(1L);
 
         Mockito.when(service.update(any())).thenThrow(new ResourceNotFoundException());
