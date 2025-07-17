@@ -57,7 +57,7 @@ export const TaskTable = ({
                 </select>
               </td>
               <td className="buttonPanel">
-                <button className="caution" onClick={() => deleteTask(task.id)}>
+                <button className="caution" onClick={() => deleteTask(task.id!)}>
                   Delete
                 </button>
               </td>

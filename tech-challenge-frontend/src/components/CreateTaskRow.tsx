@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { Task, TaskInput } from '../types'
+import { useState } from 'react'
+import { Task } from '../types'
 
 import DatePicker from 'react-datepicker'
 import { StatusOptions } from '../constants'
@@ -25,11 +25,11 @@ export const CreateTaskRow = ({ createTask }: Props) => {
     setFormData((prevState) => ({ ...prevState, [name]: value }))
   }
 
-  const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
-
+  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>, value?: boolean) => {
+    
     event.preventDefault()
 
-    const newTask: TaskInput = {
+    const newTask: Task = {
       description: formData.description,
       title: formData.title,
       status: formData.status,
@@ -40,8 +40,6 @@ export const CreateTaskRow = ({ createTask }: Props) => {
 
     createTask(newTask)
 
-    // optimistically assume creation went fine so clear fields.
-    // todo add mechanism to check success
     setFormData(emptyFormData)
   }
 
@@ -70,7 +68,7 @@ export const CreateTaskRow = ({ createTask }: Props) => {
           showIcon
           dateFormat="dd/MM/YYYY"
           selected={dueDate}
-          onChange={(date) => setDueDate(date)}
+          onChange={(date) => setDueDate(date!)}
         />
       </td>
 
