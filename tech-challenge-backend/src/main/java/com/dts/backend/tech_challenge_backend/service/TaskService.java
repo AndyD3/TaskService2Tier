@@ -4,6 +4,7 @@ import com.dts.backend.tech_challenge_backend.dto.TaskDTO;
 import com.dts.backend.tech_challenge_backend.entity.TaskEntity;
 import com.dts.backend.tech_challenge_backend.exception.ResourceNotFoundException;
 import com.dts.backend.tech_challenge_backend.repository.TaskRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,44 +15,38 @@ import java.util.stream.Collectors;
 public class TaskService {
     private final TaskRepository taskRepository;
 
+    private final ModelMapper modelMapper = new ModelMapper();
+
     @Autowired
     public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
 
-    private TaskDTO mapToDTO(TaskEntity taskEntity) {
-        return new TaskDTO(taskEntity.getId(), taskEntity.getTitle(), taskEntity.getDescription(), taskEntity.getStatus(), taskEntity.getDueDate());
-    }
-
-    //TODO ID
-    private TaskEntity mapToEntity(TaskDTO taskDTO) {
-        return new TaskEntity(taskDTO.getTitle(), taskDTO.getDescription(), taskDTO.getStatus(), taskDTO.getDueDate());
-    }
-
     public List<TaskDTO> getAll() {
         return taskRepository.findAll().stream()
-                .map(this::mapToDTO)
+                .map(entity -> modelMapper.map(entity, TaskDTO.class))
                 .collect(Collectors.toList());
     }
 
     public TaskDTO getById(Long id) {
         TaskEntity taskEntity = taskRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
-        return mapToDTO(taskEntity);
+
+        return modelMapper.map(taskEntity, TaskDTO.class);
     }
 
     public TaskDTO create(TaskDTO taskDto) {
-        TaskEntity taskEntity = mapToEntity(taskDto);
+        TaskEntity taskEntity = modelMapper.map(taskDto, TaskEntity.class);
         TaskEntity savedTask = taskRepository.save(taskEntity);
-        return mapToDTO(savedTask);
+        return modelMapper.map(savedTask, TaskDTO.class);
     }
 
     public TaskDTO update(TaskDTO taskDto) {
         taskRepository.findById(taskDto.getId()).orElseThrow(ResourceNotFoundException::new);
 
-        TaskEntity taskEntity = mapToEntity(taskDto);
+        TaskEntity taskEntity = modelMapper.map(taskDto, TaskEntity.class);
         taskEntity.setId(taskDto.getId()); //tODO make better...
         TaskEntity savedTask = taskRepository.save(taskEntity);
-        return mapToDTO(savedTask);
+        return modelMapper.map(savedTask, TaskDTO.class);
     }
 
     public void delete(Long id) {

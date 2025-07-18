@@ -2,6 +2,7 @@ package com.dts.backend.tech_challenge_backend.service;
 
 import com.dts.backend.tech_challenge_backend.dto.TaskDTO;
 import org.junit.jupiter.api.Test;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import util.TaskMappings;
@@ -17,6 +18,8 @@ import static org.hamcrest.Matchers.equalTo;
 public class TaskServiceUnitTest {
 
     private final Random r = new Random();
+
+    private final ModelMapper modelMapper = new ModelMapper();
 
     @Autowired
     private TaskService taskService;
@@ -42,7 +45,9 @@ public class TaskServiceUnitTest {
     public void shouldReturnSpecifiedTask() {
         long taskId = 2;
         TaskDTO item = taskService.getById(taskId);
-        assertThat(item, equalTo(TaskMappings.mapToDTO(SeedDatabase.task2)));
+
+        assertThat(item, equalTo(modelMapper.map(SeedDatabase.task2, TaskDTO.class)));
+
     }
 
     @Test
