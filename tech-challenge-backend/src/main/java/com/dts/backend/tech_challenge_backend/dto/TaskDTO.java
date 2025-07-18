@@ -11,16 +11,16 @@ public class TaskDTO {
 
     private Long id = null;
 
-    @NotBlank(message = "Please provide a title")
+    @NotBlank(message = "Title is mandatory")
     private String title;
 
-    @NotBlank(message = "Please provide a description")
+    @NotBlank(message = "Description is mandatory")
     private String description;
 
-    @NotBlank(message = "Please provide a status")
+    @NotBlank(message = "Status is mandatory")
     private String status;
 
-    @NotNull(message = "Please provide a due date")
+    @NotNull(message = "Due date is mandatory")
     private LocalDate dueDate;
 
     public Long getId() {

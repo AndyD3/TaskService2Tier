@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest
-public class WebLayerTest {
+public class TaskControllerWebLayerTest {
 
     private final Random r = new Random();
 
@@ -36,6 +36,12 @@ public class WebLayerTest {
 
     @MockitoBean
     private TaskService service;
+
+    private final TaskDTO emptyTask = new TaskDTO(0,
+            "", "", "", null);
+
+    final String allValidationMandatoryMessages = "{'dueDate':'Due date is mandatory','description':'Description is mandatory','title':'Title is mandatory','status':'Status is mandatory'}";
+
 
     @Test
     public void shouldGetAllAsList() throws Exception {
@@ -85,16 +91,13 @@ public class WebLayerTest {
     @Test
     public void shouldReturnValidationResponseWithMessageWhenCreatedTaskFailsValidation() throws Exception {
 
-        TaskDTO task = new TaskDTO(0,
-                "", "", "", null);
+        Mockito.when(service.create(emptyTask)).thenReturn(emptyTask);
 
-        Mockito.when(service.create(task)).thenReturn(task);
-
-        this.mockMvc.perform(post("/api/tasks").content(taskMapper.getRequestJson(task)).contentType(MediaType.APPLICATION_JSON)).andDo(print())
+        this.mockMvc.perform(post("/api/tasks").content(taskMapper.getRequestJson(emptyTask)).contentType(MediaType.APPLICATION_JSON)).andDo(print())
                 .andExpect(status().isBadRequest())
-                .andExpect(content().json("{'dueDate':'Please provide a due date','description':'Please provide a description','title':'Please provide a title','status':'Please provide a status'}"));
+                .andExpect(content().json(allValidationMandatoryMessages));
 
-        verify(service, times(0)).create(task);
+        verify(service, times(0)).create(emptyTask);
     }
 
     @Test
@@ -131,16 +134,13 @@ public class WebLayerTest {
     @Test
     public void shouldReturnValidationResponseWithMessageWhenUpdatedTaskFailsValidation() throws Exception {
 
-        TaskDTO task = new TaskDTO(0,
-                "", "", "", null);
+        Mockito.when(service.create(emptyTask)).thenReturn(emptyTask);
 
-        Mockito.when(service.create(task)).thenReturn(task);
-
-        this.mockMvc.perform(put("/api/tasks/1").content(taskMapper.getRequestJson(task)).contentType(MediaType.APPLICATION_JSON)).andDo(print())
+        this.mockMvc.perform(put("/api/tasks/1").content(taskMapper.getRequestJson(emptyTask)).contentType(MediaType.APPLICATION_JSON)).andDo(print())
                 .andExpect(status().isBadRequest())
-                .andExpect(content().json("{'dueDate':'Please provide a due date','description':'Please provide a description','title':'Please provide a title','status':'Please provide a status'}"));
+                .andExpect(content().json(allValidationMandatoryMessages));
 
-        verify(service, times(0)).create(task);
+        verify(service, times(0)).create(emptyTask);
     }
 
     @Test
