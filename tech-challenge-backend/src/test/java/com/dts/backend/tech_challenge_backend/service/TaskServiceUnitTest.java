@@ -1,11 +1,11 @@
 package com.dts.backend.tech_challenge_backend.service;
 
 import com.dts.backend.tech_challenge_backend.dto.TaskDTO;
+import com.dts.backend.tech_challenge_backend.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import util.TaskMappings;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,6 +13,7 @@ import java.util.Random;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 public class TaskServiceUnitTest {
@@ -42,15 +43,6 @@ public class TaskServiceUnitTest {
     }
 
     @Test
-    public void shouldReturnSpecifiedTask() {
-        long taskId = 2;
-        TaskDTO item = taskService.getById(taskId);
-
-        assertThat(item, equalTo(modelMapper.map(SeedDatabase.task2, TaskDTO.class)));
-
-    }
-
-    @Test
     public void shouldUpdateTask() {
 
         long taskId = 1;
@@ -61,9 +53,28 @@ public class TaskServiceUnitTest {
     }
 
     @Test
+    public void shouldThrowExceptionWhenTaskNotFoundUpdateTask() {
+
+        long nonExistingTaskId = 1000L;
+        TaskDTO task = new TaskDTO(nonExistingTaskId, "Task 1" + r.nextInt(), "get started" + r.nextInt(), "in progress", LocalDate.now());
+
+        assertThrows(ResourceNotFoundException.class, () ->
+                taskService.update(task));
+    }
+
+    @Test
     public void shouldDeleteTask() {
         int previousSize = taskService.getAll().size();
         taskService.delete(4L);
         assertThat(taskService.getAll().size(), equalTo(previousSize - 1));
+    }
+
+    @Test
+    public void shouldThrowExceptiorWhenTaskNotFoundDeleteTask() {
+
+        long nonExistingTaskId = 1000L;
+
+        assertThrows(ResourceNotFoundException.class, () ->
+                taskService.delete(nonExistingTaskId));
     }
 }

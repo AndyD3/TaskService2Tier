@@ -28,15 +28,10 @@ public class TaskService {
                 .collect(Collectors.toList());
     }
 
-    public TaskDTO getById(Long id) {
-        TaskEntity taskEntity = taskRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
-
-        return modelMapper.map(taskEntity, TaskDTO.class);
-    }
-
     public TaskDTO create(TaskDTO taskDto) {
         TaskEntity taskEntity = modelMapper.map(taskDto, TaskEntity.class);
         TaskEntity savedTask = taskRepository.save(taskEntity);
+
         return modelMapper.map(savedTask, TaskDTO.class);
     }
 
@@ -44,7 +39,6 @@ public class TaskService {
         taskRepository.findById(taskDto.getId()).orElseThrow(ResourceNotFoundException::new);
 
         TaskEntity taskEntity = modelMapper.map(taskDto, TaskEntity.class);
-        taskEntity.setId(taskDto.getId()); //tODO make better...
         TaskEntity savedTask = taskRepository.save(taskEntity);
         return modelMapper.map(savedTask, TaskDTO.class);
     }
