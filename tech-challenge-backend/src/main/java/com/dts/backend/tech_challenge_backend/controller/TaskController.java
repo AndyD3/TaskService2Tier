@@ -3,16 +3,34 @@ package com.dts.backend.tech_challenge_backend.controller;
 import com.dts.backend.tech_challenge_backend.dto.TaskDTO;
 import com.dts.backend.tech_challenge_backend.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/tasks")
 @CrossOrigin(origins = "http://localhost:3000")
 public class TaskController {
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(org.springframework.web.bind.MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(
+            org.springframework.web.bind.MethodArgumentNotValidException ex) {
+
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return errors;
+    }
 
     @Autowired
     private TaskService taskService;

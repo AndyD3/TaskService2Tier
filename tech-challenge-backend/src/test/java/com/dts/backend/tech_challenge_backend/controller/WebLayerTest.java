@@ -83,22 +83,16 @@ public class WebLayerTest {
     }
 
     @Test
-    public void shouldReturnValidationResponseWhenCreatedTaskFailsValidation() throws Exception {
+    public void shouldReturnValidationResponseWithMessageWhenCreatedTaskFailsValidation() throws Exception {
 
         TaskDTO task = new TaskDTO(0,
-                "", "", "status" + r.nextInt(), LocalDate.now());
+                "", "", "", null);
 
         Mockito.when(service.create(task)).thenReturn(task);
 
-        //TODO proper error message....
-
         this.mockMvc.perform(post("/api/tasks").content(taskMapper.getRequestJson(task)).contentType(MediaType.APPLICATION_JSON)).andDo(print())
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.title", is(task.getTitle())))
-                .andExpect(jsonPath("$.description", is(task.getDescription())))
-                .andExpect(jsonPath("$.status", is(task.getStatus())))
-                .andExpect(jsonPath("$.dueDate", is(task.getDueDate().toString())));
-
+                .andExpect(content().json("{'dueDate':'Please provide a due date','description':'Please provide a description','title':'Please provide a title','status':'Please provide a status'}"));
 
         verify(service, times(0)).create(task);
     }
@@ -132,6 +126,21 @@ public class WebLayerTest {
         this.mockMvc.perform(put("/api/tasks/1").content(taskMapper.getRequestJson(task)).contentType(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isNotFound()).andExpect(jsonPath("$").doesNotExist());
 
         verify(service, times(1)).update(any());
+    }
+
+    @Test
+    public void shouldReturnValidationResponseWithMessageWhenUpdatedTaskFailsValidation() throws Exception {
+
+        TaskDTO task = new TaskDTO(0,
+                "", "", "", null);
+
+        Mockito.when(service.create(task)).thenReturn(task);
+
+        this.mockMvc.perform(put("/api/tasks/1").content(taskMapper.getRequestJson(task)).contentType(MediaType.APPLICATION_JSON)).andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(content().json("{'dueDate':'Please provide a due date','description':'Please provide a description','title':'Please provide a title','status':'Please provide a status'}"));
+
+        verify(service, times(0)).create(task);
     }
 
     @Test

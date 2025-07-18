@@ -70,7 +70,7 @@ public class TaskServiceUnitTest {
     }
 
     @Test
-    public void shouldThrowExceptiorWhenTaskNotFoundDeleteTask() {
+    public void shouldThrowExceptionWhenTaskNotFoundDeleteTask() {
 
         long nonExistingTaskId = 1000L;
 
