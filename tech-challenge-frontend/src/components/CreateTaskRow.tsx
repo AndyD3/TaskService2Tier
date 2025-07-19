@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Task } from '../types'
 
 import DatePicker from 'react-datepicker'
-import { StatusTextMap, Status } from '../constants'
+import { Status, StatusTextMap } from '../constants'
 import 'react-datepicker/dist/react-datepicker.css'
 
 type Props = {
@@ -76,7 +76,7 @@ export const CreateTaskRow = ({ createTask }: Props) => {
 
       <td>
         <select className="custom-select" name="status" onChange={handleChange}>
-          {Status.map((entry, index) => {
+          {Object.keys(StatusTextMap).map((entry, index) => {
             return (
               <option key={index} value={entry}>
                 {StatusTextMap[entry]}
