@@ -1,9 +1,6 @@
 package com.dts.backend.tech_challenge_backend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -17,8 +14,12 @@ public class TaskEntity {
     private Long id = null;
 
     private String title;
+
     private String description;
-    private String status;
+
+    @Enumerated(EnumType.ORDINAL)
+    private TaskStatus status;
+
     private LocalDate dueDate;
 
     public Long getId() {
@@ -45,11 +46,11 @@ public class TaskEntity {
         this.description = description;
     }
 
-    public String getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
     }
 
@@ -61,14 +62,14 @@ public class TaskEntity {
         this.dueDate = dueDate;
     }
 
-    public TaskEntity(String title, String description, String status, LocalDate dueDate) {
+    public TaskEntity(String title, String description, TaskStatus status, LocalDate dueDate) {
         this.title = title;
         this.description = description;
         this.status = status;
         this.dueDate = dueDate;
     }
 
-    public TaskEntity(long id, String title, String description, String status, LocalDate dueDate) {
+    public TaskEntity(long id, String title, String description, TaskStatus status, LocalDate dueDate) {
         this.id = id;
         this.title = title;
         this.description = description;

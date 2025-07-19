@@ -1,6 +1,6 @@
 import React from 'react'
 import { Task } from '../types'
-import { StatusOptions } from '../constants'
+import { StatusTextMap } from '../constants'
 import { CreateTaskRow } from './CreateTaskRow'
 
 type Props = {
@@ -51,13 +51,20 @@ export const TaskTable = ({
                   value={task.status}
                   onChange={() => onOptionChangeHandler(task, event)}
                 >
-                  {StatusOptions.map((option, index) => {
-                    return <option key={index}>{option}</option>
+                  {Object.keys(StatusTextMap).map((entry, index) => {
+                    return (
+                      <option key={index} value={entry}>
+                        {StatusTextMap[entry]}
+                      </option>
+                    )
                   })}
                 </select>
               </td>
               <td className="buttonPanel">
-                <button className="caution" onClick={() => deleteTask(task.id!)}>
+                <button
+                  className="caution"
+                  onClick={() => deleteTask(task.id!)}
+                >
                   Delete
                 </button>
               </td>

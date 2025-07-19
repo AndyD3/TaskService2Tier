@@ -1,5 +1,6 @@
 package com.dts.backend.tech_challenge_backend.dto;
 
+import com.dts.backend.tech_challenge_backend.entity.TaskStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -17,8 +18,8 @@ public class TaskDTO {
     @NotBlank(message = "Description is mandatory")
     private String description;
 
-    @NotBlank(message = "Status is mandatory")
-    private String status;
+    @NotNull(message = "Status is mandatory")
+    private TaskStatus status;
 
     @NotNull(message = "Due date is mandatory")
     private LocalDate dueDate;
@@ -47,11 +48,11 @@ public class TaskDTO {
         this.description = description;
     }
 
-    public String getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
     }
 
@@ -63,14 +64,14 @@ public class TaskDTO {
         this.dueDate = dueDate;
     }
 
-    public TaskDTO(String title, String description, String status, LocalDate dueDate) {
+    public TaskDTO(String title, String description, TaskStatus status, LocalDate dueDate) {
         this.title = title;
         this.description = description;
         this.status = status;
         this.dueDate = dueDate;
     }
 
-    public TaskDTO(long id, String title, String description, String status, LocalDate dueDate) {
+    public TaskDTO(long id, String title, String description, TaskStatus status, LocalDate dueDate) {
         this.id = id;
         this.title = title;
         this.description = description;

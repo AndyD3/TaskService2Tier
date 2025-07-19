@@ -1,6 +1,7 @@
 package com.dts.backend.tech_challenge_backend.service;
 
 import com.dts.backend.tech_challenge_backend.dto.TaskDTO;
+import com.dts.backend.tech_challenge_backend.entity.TaskStatus;
 import com.dts.backend.tech_challenge_backend.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -36,7 +37,7 @@ public class TaskServiceUnitTest {
         //TODO not happy with this..should refresh DB
         int previousSize = taskService.getAll().size();
 
-        TaskDTO newTask = new TaskDTO("Task 5", "get started", "in progress", LocalDate.now());
+        TaskDTO newTask = new TaskDTO("Task 5", "get started", TaskStatus.IN_PROGRESS, LocalDate.now());
         taskService.create(newTask);
 
         assertThat(taskService.getAll().size(), equalTo(previousSize + 1));
@@ -46,7 +47,7 @@ public class TaskServiceUnitTest {
     public void shouldUpdateTask() {
 
         long taskId = 1;
-        TaskDTO expectedTask = new TaskDTO(taskId, "Task 1" + r.nextInt(), "get started" + r.nextInt(), "in progress", LocalDate.now());
+        TaskDTO expectedTask = new TaskDTO(taskId, "Task 1" + r.nextInt(), "get started" + r.nextInt(), TaskStatus.IN_PROGRESS, LocalDate.now());
 
         TaskDTO actualTask = taskService.update(expectedTask);
         assertThat(actualTask, equalTo(expectedTask));
@@ -56,7 +57,7 @@ public class TaskServiceUnitTest {
     public void shouldThrowExceptionWhenTaskNotFoundUpdateTask() {
 
         long nonExistingTaskId = 1000L;
-        TaskDTO task = new TaskDTO(nonExistingTaskId, "Task 1" + r.nextInt(), "get started" + r.nextInt(), "in progress", LocalDate.now());
+        TaskDTO task = new TaskDTO(nonExistingTaskId, "Task 1" + r.nextInt(), "get started" + r.nextInt(), TaskStatus.IN_PROGRESS, LocalDate.now());
 
         assertThrows(ResourceNotFoundException.class, () ->
                 taskService.update(task));

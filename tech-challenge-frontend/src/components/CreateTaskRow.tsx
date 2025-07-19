@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Task } from '../types'
 
 import DatePicker from 'react-datepicker'
-import { StatusOptions } from '../constants'
+import { StatusTextMap, Status } from '../constants'
 import 'react-datepicker/dist/react-datepicker.css'
 
 type Props = {
@@ -12,10 +12,10 @@ type Props = {
 export const CreateTaskRow = ({ createTask }: Props) => {
   const [dueDate, setDueDate] = useState(new Date())
 
-  const emptyFormData= {
+  const emptyFormData = {
     title: '',
     description: '',
-    status: ''
+    status: Status.NOT_STARTED,
   }
 
   const [formData, setFormData] = useState(emptyFormData)
@@ -25,8 +25,10 @@ export const CreateTaskRow = ({ createTask }: Props) => {
     setFormData((prevState) => ({ ...prevState, [name]: value }))
   }
 
-  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>, value?: boolean) => {
-    
+  const handleSubmit = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    value?: boolean
+  ) => {
     event.preventDefault()
 
     const newTask: Task = {
@@ -73,21 +75,23 @@ export const CreateTaskRow = ({ createTask }: Props) => {
       </td>
 
       <td>
-        <select
-          className="custom-select"
-          name="status"
-          onChange={handleChange}
-        >
-          {StatusOptions.map((option, index) => {
-            return <option value={option} key={index}>{option}</option>
+        <select className="custom-select" name="status" onChange={handleChange}>
+          {Status.map((entry, index) => {
+            return (
+              <option key={index} value={entry}>
+                {StatusTextMap[entry]}
+              </option>
+            )
           })}
         </select>
       </td>
 
       <td className="buttonPanel">
-        <button disabled={formData.description=='' || formData.title==''} 
-        className="cta" 
-        onClick={handleSubmit}>
+        <button
+          disabled={formData.description == '' || formData.title == ''}
+          className="cta"
+          onClick={handleSubmit}
+        >
           Create
         </button>
       </td>
