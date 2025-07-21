@@ -24,9 +24,6 @@ export const useCreateTask = (): UseBaseMutationResult<
     mutationFn: (task: Task) => createTask(task),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] })
-    },
-    onError: (err) => {
-      console.log('failure', err)
-    },
+    }
   })
 }

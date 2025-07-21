@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect, vi, Mock } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import App from './App'
 import { Task, Status } from './types';
 import '@testing-library/jest-dom/vitest'

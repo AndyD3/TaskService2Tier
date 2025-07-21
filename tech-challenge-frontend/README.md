@@ -28,7 +28,7 @@ http://localhost:3000/
 You can run the unit tests with
 
 ```
-npm test                                    // todo
+npm test
 ```
 
 Eslint and Prettify have been added along with the plugins so issues should be highlighted in a correctly configured IDE. These can be ran from the command line.

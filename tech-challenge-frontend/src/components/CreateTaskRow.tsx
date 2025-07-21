@@ -49,6 +49,7 @@ export const CreateTaskRow = ({ createTask }: Props) => {
         <input
           type="text"
           name="title"
+          aria-label='title'
           value={formData.title}
           onChange={handleChange}
         />
@@ -57,6 +58,7 @@ export const CreateTaskRow = ({ createTask }: Props) => {
         <input
           type="text"
           name="description"
+          aria-label='description'
           value={formData.description}
           onChange={handleChange}
         />
@@ -73,7 +75,7 @@ export const CreateTaskRow = ({ createTask }: Props) => {
       </td>
 
       <td>
-        <select className="custom-select" name="status" onChange={handleChange}>
+        <select className="custom-select" name="status" aria-label='status' onChange={handleChange}>
           {Object.keys(StatusTextMap).map((entry, index) => {
             return (
               <option key={index} value={entry}>
@@ -88,6 +90,7 @@ export const CreateTaskRow = ({ createTask }: Props) => {
         <button
           disabled={formData.description == '' || formData.title == ''}
           className="cta"
+          aria-label='create'
           onClick={handleSubmit}
         >
           Create

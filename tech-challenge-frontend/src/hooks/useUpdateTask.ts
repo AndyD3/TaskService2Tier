@@ -21,14 +21,6 @@ export const useUpdateTask = (): UseBaseMutationResult<
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (task: Task) => updateTask(task),
-    onSuccess: () => {
-      console.log('exito')
-      queryClient.invalidateQueries({ queryKey: ['tasks'] })
-    },
-
-    onError: (err) => {
-      console.log('failure', err)
-    },
+    mutationFn: (task: Task) => updateTask(task)
   })
 }
