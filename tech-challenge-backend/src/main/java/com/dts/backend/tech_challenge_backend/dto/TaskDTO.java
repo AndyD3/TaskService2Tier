@@ -15,7 +15,6 @@ public class TaskDTO {
     @NotBlank(message = "Title is mandatory")
     private String title;
 
-    @NotBlank(message = "Description is mandatory")
     private String description;
 
     @NotNull(message = "Status is mandatory")

@@ -88,7 +88,7 @@ export const CreateTaskRow = ({ createTask }: Props) => {
 
       <td className="buttonPanel">
         <button
-          disabled={formData.description == '' || formData.title == ''}
+          disabled={formData.title == ''}
           className="cta"
           aria-label='create'
           onClick={handleSubmit}

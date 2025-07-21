@@ -36,11 +36,10 @@ describe('TaskRow', () => {
         expect(button).toBeDisabled();
     });
 
-    it('enables create button when fields populated', async () => {
+    it('enables create button when title populated', async () => {
 
       render(<CreateTaskRow createTask={mockCreateTask} />)
 
-      await userEvent.type(screen.getByLabelText('description'), 'description-text')
       await userEvent.type(screen.getByLabelText('title'), 'title-text')
 
       const button=screen.getByRole('button',  {

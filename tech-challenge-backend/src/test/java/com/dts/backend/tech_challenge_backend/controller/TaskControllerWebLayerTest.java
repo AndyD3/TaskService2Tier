@@ -40,7 +40,7 @@ public class TaskControllerWebLayerTest {
     private final TaskDTO emptyTask = new TaskDTO(0,
             "", "", null, null);
 
-    final String allValidationMandatoryMessages = "{'dueDate':'Due date is mandatory','description':'Description is mandatory','title':'Title is mandatory','status':'Status is mandatory'}";
+    final String allValidationMandatoryMessages = "{'dueDate':'Due date is mandatory','title':'Title is mandatory','status':'Status is mandatory'}";
 
 
     @Test
