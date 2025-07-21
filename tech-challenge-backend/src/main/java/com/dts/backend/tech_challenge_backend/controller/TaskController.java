@@ -37,21 +37,27 @@ public class TaskController {
 
     @GetMapping
     public ResponseEntity<List<TaskDTO>> getAll() {
-        List<TaskDTO> products = taskService.getAll();
-        return ResponseEntity.ok(products);
+        List<TaskDTO> tasks = taskService.getAll();
+        return ResponseEntity.ok(tasks);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TaskDTO> getById(@PathVariable Long id) {
+        TaskDTO task = taskService.getById(id);
+        return ResponseEntity.ok(task);
     }
 
     @PostMapping
     public ResponseEntity<TaskDTO> create(@RequestBody @Valid TaskDTO taskDTO) {
-        TaskDTO createdProduct = taskService.create(taskDTO);
-        return ResponseEntity.ok(createdProduct);
+        TaskDTO createdTask = taskService.create(taskDTO);
+        return ResponseEntity.ok(createdTask);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<TaskDTO> update(@PathVariable Long id, @RequestBody @Valid TaskDTO taskDTO) {
         taskDTO.setId(id);
-        TaskDTO updatedProduct = taskService.update(taskDTO);
-        return ResponseEntity.ok(updatedProduct);
+        TaskDTO updatedTask = taskService.update(taskDTO);
+        return ResponseEntity.ok(updatedTask);
     }
 
     @DeleteMapping("/{id}")

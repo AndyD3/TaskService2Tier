@@ -69,6 +69,37 @@ public class TaskControllerWebLayerTest {
         verify(service, times(1)).getAll();
     }
 
+    @Test
+    public void shouldGetSingleTask() throws Exception {
+
+        Long taskID=1L;
+
+        TaskDTO task = new TaskDTO(taskID, "title" + r.nextInt(), "desc" + r.nextInt(), TaskStatus.DONE, LocalDate.now());
+
+        Mockito.when(service.getById(taskID)).thenReturn(task);
+
+        this.mockMvc.perform(get("/api/tasks/1")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title", is(task.getTitle())))
+                .andExpect(jsonPath("$.description", is(task.getDescription())))
+                .andExpect(jsonPath("$.status", is(task.getStatus().toString())))
+                .andExpect(jsonPath("$.dueDate", is(task.getDueDate().toString())));
+
+        verify(service, times(1)).getById(taskID);
+    }
+
+    @Test
+    public void shouldErrorForGetSingleTaskWhenTaskNotFound() throws Exception {
+
+        Long taskID=1L;
+
+        Mockito.when(service.getById(taskID)).thenThrow(new ResourceNotFoundException());
+
+        this.mockMvc.perform(get("/api/tasks/1")).andDo(print()).andExpect(status().isNotFound()).andExpect(jsonPath("$").doesNotExist());
+
+        verify(service, times(1)).getById(any());
+    }
 
     @Test
     public void shouldCreateAndReturnCreatedTask() throws Exception {

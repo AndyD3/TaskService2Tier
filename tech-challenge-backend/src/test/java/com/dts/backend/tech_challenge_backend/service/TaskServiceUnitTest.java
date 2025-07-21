@@ -43,6 +43,14 @@ public class TaskServiceUnitTest {
     }
 
     @Test
+    public void shouldReturnSpecifiedTask() {
+        long taskId = 2;
+        TaskDTO item = taskService.getById(taskId);
+
+        assertThat(item, equalTo(modelMapper.map(SeedDatabase.task2, TaskDTO.class)));
+    }
+
+    @Test
     public void shouldUpdateTask() {
 
         long taskId = 1;
