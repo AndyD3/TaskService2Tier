@@ -16,7 +16,7 @@ export const useDeleteTask = (): UseBaseMutationResult<
 > => {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: (todoId: number) => deleteTask(todoId),
+    mutationFn: (taskID: number) => deleteTask(taskID),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] })
     },

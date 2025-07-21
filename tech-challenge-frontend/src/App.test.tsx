@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { describe, it, expect, vi, Mock } from 'vitest'
 import App from './App'
-import { Task } from './types';
+import { Task, Status } from './types';
 import '@testing-library/jest-dom/vitest'
 
 vi.mock('./components/TaskTable', () => ({
@@ -11,7 +11,7 @@ vi.mock('./components/TaskTable', () => ({
 const mockTask:Task = {
   title: '',
   description: '',
-  status: '',
+  status: Status.NOT_STARTED,
   dueDate: new Date()
 }
 

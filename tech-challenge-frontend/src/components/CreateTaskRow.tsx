@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { Task } from '../types'
+import { Status, Task } from '../types'
 
 import DatePicker from 'react-datepicker'
-import { Status, StatusTextMap } from '../constants'
+import { StatusTextMap } from '../constants'
 import 'react-datepicker/dist/react-datepicker.css'
 
 type Props = {
@@ -37,8 +37,6 @@ export const CreateTaskRow = ({ createTask }: Props) => {
       status: formData.status,
       dueDate: dueDate,
     }
-
-    console.log('newTask:', newTask)
 
     createTask(newTask)
 

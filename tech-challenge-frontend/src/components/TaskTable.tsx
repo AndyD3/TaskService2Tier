@@ -1,5 +1,5 @@
 import React from 'react'
-import { Task } from '../types'
+import { Status, Task } from '../types'
 import { StatusTextMap } from '../constants'
 import { CreateTaskRow } from './CreateTaskRow'
 
@@ -17,7 +17,7 @@ export const TaskTable = ({
   createTask,
 }: Props) => {
   const onOptionChangeHandler = (task: Task, event: Event | undefined) => {
-    task.status = (event?.target as HTMLInputElement).value
+    task.status = (event?.target as HTMLInputElement).value as unknown as Status
 
     editTask(task)
   }
