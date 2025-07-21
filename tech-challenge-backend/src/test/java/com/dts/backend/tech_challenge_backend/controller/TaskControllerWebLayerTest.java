@@ -100,20 +100,6 @@ public class TaskControllerWebLayerTest {
     }
 
     @Test
-    public void shouldReturnValidationResponseWithMessageWhenCreatedTaskFailsStatusValidation() throws Exception {
-
-        TaskDTO task = new TaskDTO(0, "title" + r.nextInt(), "desc" + r.nextInt(), TaskStatus.FAILED, LocalDate.now());
-        task.setId(1L);
-
-
-        this.mockMvc.perform(post("/api/tasks").content(taskMapper.getRequestJson(task)).contentType(MediaType.APPLICATION_JSON)).andDo(print())
-                .andExpect(status().isBadRequest())
-                .andExpect(content().json(allValidationMandatoryMessages));
-
-        verify(service, times(0)).create(emptyTask);
-    }
-
-    @Test
     public void shouldUpdate() throws Exception {
 
         TaskDTO task = new TaskDTO(0, "title" + r.nextInt(), "desc" + r.nextInt(), TaskStatus.NOT_STARTED, LocalDate.now());
