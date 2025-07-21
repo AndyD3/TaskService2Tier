@@ -22,21 +22,22 @@ function TaskManager() {
   const { mutate: deleteTask } = useDeleteTask()
   const { data: tasks, isLoading, isError } = useReadTasks()
   const { mutate: addTask, status: statusCreateTask } = useCreateTask()
-  const { mutate: updateTask, status: statusUpdateTask} = useUpdateTask()
+  const { mutate: updateTask, status: statusUpdateTask } = useUpdateTask()
 
-  const errorOccured=isError || statusCreateTask=='error' || statusUpdateTask=='error';
-
+  const errorOccured =
+    isError || statusCreateTask == 'error' || statusUpdateTask == 'error'
+    
   return (
-    <div className="container">
-      <h1>Task Manager</h1>
+    <div data-testid="container" className="container">
+      <h1 data-testid="title">Task Manager</h1>
 
-      {errorOccured && <div>An error has occurred...</div>}
+      {errorOccured && <div data-testid="error">An error has occurred...</div>}
 
-      {isLoading && <div>Loading...</div>}
+      {isLoading && <div data-testid="loading">Loading...</div>}
 
       <div>
-        <div className='instructions'>
-        Tasks can be deleted, created or have their status changed. 
+        <div data-testid="instructions" className="instructions">
+          Tasks can be deleted, created or have their status changed.
         </div>
         {tasks && (
           <TaskTable

@@ -5,3 +5,6 @@ export type Task = {
   status: string
   dueDate: Date
 }
+export type StatusEnumText = {
+  [key: string]: string
+}

@@ -1,10 +1,3 @@
-TODO
-get docker working
-
-    one big table, with edit delete, search
-
-    https://dev.to/thwani47/building-a-crud-app-with-react-query-typescript-and-axios-2d0j
-
 # Running locally
 
 ```
@@ -38,12 +31,6 @@ You can run the unit tests with
 npm test                                    // todo
 ```
 
-And see a coverage report with
-
-```
-npm run coverage                             // todo
-```
-
 Eslint and Prettify have been added along with the plugins so issues should be highlighted in a correctly configured IDE. These can be ran from the command line.
 
 You can run eslint on the source with the following command
@@ -57,21 +44,3 @@ You can prettify the code with
 ```
 npm run format
 ```
-
-# TODO
-
-
-pass date with this???
-https://www.baeldung.com/spring-date-parameters
-https://www.npmjs.com/package/react-datepicker
-
-
-https://dev.to/dcodeyt/creating-beautiful-html-tables-with-css-428l
-
-get tests running
-get coverage working
-get eslint plugins working (as stated above)
-
-error
-loading
-no records..
