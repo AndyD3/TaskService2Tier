@@ -34,10 +34,9 @@ public class TaskServiceUnitTest {
 
     @Test
     public void shouldCreateSpecifiedTask() {
-        //TODO not happy with this..should refresh DB
         int previousSize = taskService.getAll().size();
 
-        TaskDTO newTask = new TaskDTO("Task 5", "get started", TaskStatus.IN_PROGRESS, LocalDate.now());
+        TaskDTO newTask = new TaskDTO("Task 5"+ r.nextInt(), "get started" + r.nextInt(), TaskStatus.IN_PROGRESS, LocalDate.now());
         taskService.create(newTask);
 
         assertThat(taskService.getAll().size(), equalTo(previousSize + 1));
