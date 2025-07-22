@@ -6,7 +6,7 @@ import '@testing-library/jest-dom/vitest'
 
 vi.mock('react-datepicker', () => {
     return {
-      default: vi.fn(()=> <div data-testid='DatePicker' />),
+      default: vi.fn(()=> <input data-testid='DatePicker' name="dueDate" value="ff"/>),
     }
 })
 
@@ -21,13 +21,17 @@ describe('TaskRow', () => {
     it('renders the fields and disabled create button', () => {
         render(<CreateTaskRow createTask={mockCreateTask} />)
 
-        screen.getByLabelText('title')
-        expect(screen.getByLabelText('title')).toBeInTheDocument();
-        expect(screen.getByLabelText('description')).toBeInTheDocument();
-        expect(screen.getByLabelText('status')).toBeInTheDocument();
-        expect(screen.getByTestId('DatePicker')).toBeInTheDocument();
+        const title=screen.getByLabelText('title')        
+        expect(title).toHaveValue("");
 
-        //TODO assert fields default settings
+        const description=screen.getByLabelText('description')
+        expect(description).toHaveValue("");
+
+        const status=screen.getByRole('combobox',  {
+            name: 'status'
+          })
+        expect(status).toHaveValue("NOT_STARTED");
+        expect(screen.getByTestId('DatePicker')).toBeInTheDocument();
 
         const button=screen.getByRole('button',  {
             name: 'create'
@@ -55,6 +59,12 @@ describe('TaskRow', () => {
         await userEvent.type(screen.getByLabelText('description'), 'description-text')
         await userEvent.type(screen.getByLabelText('title'), 'title-text')
 
+        const status=screen.getByRole('combobox',  {
+            name: 'status'
+          })
+
+        userEvent.selectOptions(status, "DONE");
+
         const button=screen.getByRole('button',  {
             name: 'create'
           });
@@ -68,25 +78,23 @@ describe('TaskRow', () => {
 
         const expected={
             "description": "description-text",
-            // "dueDate": null, //todo make nicer...
-            "status": 0,
+            // "dueDate": new Date(), //todo can I make this nicer??
+            "status": 0, //todo - get this nice, is setting a number from enum rther than the text bit
             "title": "title-text",
         };
-
 
         expect(mockCreateTask).toHaveBeenLastCalledWith(
             expect.objectContaining(expected)
         );
     });
 
-    it('allows selection of status', () => {
-        //todo
-        render(<CreateTaskRow createTask={mockCreateTask} />)
-    });
+    // it('clears down fields after create', () => {
+    //     //todo
 
-    it('clears down fields after create', () => {
-        //todo
-        render(<CreateTaskRow createTask={mockCreateTask} />)
-    });
+    //     //is this even a thing?
+        
+
+    //     render(<CreateTaskRow createTask={mockCreateTask} />)
+    // });
 
 });

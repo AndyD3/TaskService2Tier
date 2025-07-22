@@ -31,14 +31,6 @@ You can run the unit tests with
 npm test
 ```
 
-Eslint and Prettify have been added along with the plugins so issues should be highlighted in a correctly configured IDE. These can be ran from the command line.
-
-You can run eslint on the source with the following command
-
-```
-npm run lint
-```
-
 You can prettify the code with
 
 ```
