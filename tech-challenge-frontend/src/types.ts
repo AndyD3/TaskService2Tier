@@ -1,9 +1,9 @@
 export enum Status {
   'NOT_STARTED' = 'NOT_STARTED',
-  'IN_PROGRESS' ='IN_PROGRESS',
+  'IN_PROGRESS' = 'IN_PROGRESS',
   'BLOCKED' = 'BLOCKED',
   'DONE' = 'DONE',
-  'FAILED' = 'FAILED'
+  'FAILED' = 'FAILED',
 }
 
 export type Task = {

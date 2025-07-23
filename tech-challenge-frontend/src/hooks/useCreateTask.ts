@@ -6,10 +6,7 @@ import { AxiosResponse } from 'axios'
 import axiosClient from 'axios'
 
 const createTask = async (task: Task): Promise<AxiosResponse<Task>> => {
-  return await axiosClient.post<Task>(
-    'http://localhost:8080/api/tasks',
-    task
-  )
+  return await axiosClient.post<Task>('http://localhost:8080/api/tasks', task)
 }
 
 export const useCreateTask = (): UseBaseMutationResult<
@@ -24,6 +21,6 @@ export const useCreateTask = (): UseBaseMutationResult<
     mutationFn: (task: Task) => createTask(task),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] })
-    }
+    },
   })
 }

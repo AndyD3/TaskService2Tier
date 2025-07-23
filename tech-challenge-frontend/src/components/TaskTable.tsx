@@ -49,13 +49,13 @@ export const TaskTable = ({
                 <select
                   className="custom-select"
                   value={task.status}
-                  aria-label='status'
+                  aria-label="status"
                   data-testid={`status-${task.id}`}
                   onChange={() => onOptionChangeHandler(task, event)}
                 >
                   {Object.keys(StatusTextMap).map((entry, index) => {
                     return (
-                      <option key={index} value={entry}>                        
+                      <option key={index} value={entry}>
                         {StatusTextMap[entry]}
                       </option>
                     )
@@ -64,7 +64,7 @@ export const TaskTable = ({
               </td>
               <td className="buttonPanel">
                 <button
-                  aria-label='delete'
+                  aria-label="delete"
                   data-testid={`delete-${task.id}`}
                   className="caution"
                   onClick={() => deleteTask(task.id!)}

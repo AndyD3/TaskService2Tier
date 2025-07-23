@@ -21,6 +21,6 @@ export const useUpdateTask = (): UseBaseMutationResult<
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (task: Task) => updateTask(task)
+    mutationFn: (task: Task) => updateTask(task),
   })
 }

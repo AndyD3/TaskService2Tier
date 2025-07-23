@@ -1,4 +1,4 @@
-import { StatusText } from "./types";
+import { StatusText } from './types'
 
 export const StatusTextMap: StatusText = {
   NOT_STARTED: 'Not started',

@@ -1,55 +1,52 @@
 import { renderHook, waitFor } from '@testing-library/react'
 import { describe, it, expect, vi } from 'vitest'
-import { Task, Status } from '../types';
+import { Task, Status } from '../types'
 import '@testing-library/jest-dom/vitest'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import axios from 'axios';
-import { useUpdateTask } from './useUpdateTask';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import axios from 'axios'
+import { useUpdateTask } from './useUpdateTask'
 
 const createWrapper = () => {
-
   const queryClient = new QueryClient()
 
   return ({ children }) => (
-    <QueryClientProvider client={queryClient}>
-      {children}
-    </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   )
 }
 
-const mockTask1:Task = {
+const mockTask1: Task = {
   id: 123,
   title: 'mockTitle-123',
   description: 'mockDescription-123',
   status: Status.IN_PROGRESS,
-  dueDate: new Date()
+  dueDate: new Date(),
 }
 
 // Mock jest and set the type
-vi.mock('axios');
-const mockedAxios = axios as jest.Mocked<typeof axios>;
+vi.mock('axios')
+const mockedAxios = axios as jest.Mocked<typeof axios>
 
 describe('useUpdateTask', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
 
-    beforeEach(() => {
-      vi.clearAllMocks();
-    });
+  it('calls to update the task, setting isSuccess appropriately', async () => {
+    const { result } = renderHook(() => useUpdateTask(), {
+      wrapper: createWrapper(),
+    })
 
-    it('calls to update the task, setting isSuccess appropriately', async () => {
+    result.current.mutate(mockTask1)
 
-      const { result } = renderHook(() => useUpdateTask(), {
-        wrapper: createWrapper(),
-      })
+    expect(result.current.isSuccess).toBeFalsy()
 
-      result.current.mutate(mockTask1);
+    await waitFor(() => {
+      expect(result.current.isSuccess).toBeTruthy()
+    })
 
-      expect(result.current.isSuccess).toBeFalsy();
-
-      await waitFor(() => {
-        expect(result.current.isSuccess).toBeTruthy()
-      }
-      );
-
-      expect(mockedAxios.put).toHaveBeenLastCalledWith("http://localhost:8080/api/tasks/123", mockTask1);
-    });
-});
+    expect(mockedAxios.put).toHaveBeenLastCalledWith(
+      'http://localhost:8080/api/tasks/123',
+      mockTask1
+    )
+  })
+})

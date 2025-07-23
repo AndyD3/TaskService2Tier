@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import { useDeleteTask } from './hooks/useDeleteTask'
@@ -26,7 +26,7 @@ function TaskManager() {
 
   const errorOccured =
     isError || statusCreateTask == 'error' || statusUpdateTask == 'error'
-    
+
   return (
     <div data-testid="container" className="container">
       <h1 data-testid="title">Task Manager</h1>

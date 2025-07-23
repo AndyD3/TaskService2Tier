@@ -41,8 +41,8 @@ h1 {
 
 .dataTable th,
 .dataTable td {
-  overflow: hidden; 
-  text-overflow: ellipsis; 
+  overflow: hidden;
+  text-overflow: ellipsis;
   word-wrap: break-word;
   padding: 12px 15px;
 }
@@ -98,7 +98,7 @@ button {
 
 input {
   font-size: calc(3px + 2vmin);
-  width:100%
+  width: 100%;
 }
 
 .custom-select {
@@ -106,7 +106,7 @@ input {
 }
 
 .react-datepicker-wrapper {
-  width:70%;
+  width: 70%;
   display: block;
 }
 
