@@ -27,7 +27,7 @@ const mockTask1:Task = {
     id: 123,
     title: 'mockTitle-123',
     description: 'mockDescription-123',
-    status: Status[2],
+    status: Status.BLOCKED,
     dueDate: dateTommorrow
 }
 
@@ -38,7 +38,7 @@ const mockTask2:Task = {
     id: 999,
     title: 'mockTitle-999',
     description: 'mockDescription-999',
-    status: Status[1],
+    status: Status.FAILED,
     dueDate: dateInOneWeeksTime
 }
 

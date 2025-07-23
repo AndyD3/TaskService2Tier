@@ -1,6 +1,6 @@
-import { StatusEnumText } from "./types";
+import { StatusText } from "./types";
 
-export const StatusTextMap: StatusEnumText = {
+export const StatusTextMap: StatusText = {
   NOT_STARTED: 'Not started',
   IN_PROGRESS: 'In Progress',
   BLOCKED: 'Blocked',

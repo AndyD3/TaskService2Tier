@@ -78,8 +78,7 @@ describe('TaskRow', () => {
 
         const expected={
             "description": "description-text",
-            // "dueDate": new Date(), //todo can I make this nicer??
-            "status": 0, //todo - get this nice, is setting a number from enum rther than the text bit
+            "status": "NOT_STARTED",
             "title": "title-text",
         };
 
@@ -88,13 +87,32 @@ describe('TaskRow', () => {
         );
     });
 
-    // it('clears down fields after create', () => {
-    //     //todo
+    it('clears down fields after create', async () => {
+      render(<CreateTaskRow createTask={mockCreateTask} />)
 
-    //     //is this even a thing?
-        
+      await userEvent.type(screen.getByLabelText('description'), 'description-text')
+      await userEvent.type(screen.getByLabelText('title'), 'title-text')
 
-    //     render(<CreateTaskRow createTask={mockCreateTask} />)
-    // });
+      let status=screen.getByRole('combobox',  {
+          name: 'status'
+        })
+
+      userEvent.selectOptions(status, "DONE");
+
+      await fireEvent.click(screen.getByRole('button',  {
+        name: 'create'
+      }))
+       
+      const title=screen.getByLabelText('title')        
+      expect(title).toHaveValue("");
+
+      const description=screen.getByLabelText('description')
+      expect(description).toHaveValue("");
+
+      status=screen.getByRole('combobox',  {
+          name: 'status'
+        })
+      expect(status).toHaveValue("NOT_STARTED");
+    });
 
 });

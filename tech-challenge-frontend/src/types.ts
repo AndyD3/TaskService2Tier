@@ -1,9 +1,9 @@
 export enum Status {
-  NOT_STARTED,
-  IN_PROGRESS,
-  BLOCKED,
-  DONE,
-  FAILED
+  'NOT_STARTED' = 'NOT_STARTED',
+  'IN_PROGRESS' ='IN_PROGRESS',
+  'BLOCKED' = 'BLOCKED',
+  'DONE' = 'DONE',
+  'FAILED' = 'FAILED'
 }
 
 export type Task = {
@@ -13,6 +13,6 @@ export type Task = {
   status: Status
   dueDate: Date
 }
-export type StatusEnumText = {
+export type StatusText = {
   [key: string]: string
 }

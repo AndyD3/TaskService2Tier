@@ -75,7 +75,7 @@ export const CreateTaskRow = ({ createTask }: Props) => {
       </td>
 
       <td>
-        <select className="custom-select" name="status" aria-label='status' onChange={handleChange}>
+        <select className="custom-select" name="status" aria-label='status' value={formData.status} onChange={handleChange}>
           {Object.keys(StatusTextMap).map((entry, index) => {
             return (
               <option key={index} value={entry}>
