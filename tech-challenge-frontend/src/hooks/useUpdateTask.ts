@@ -1,6 +1,6 @@
 import { UseBaseMutationResult } from '@tanstack/react-query'
 
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { Task } from '../types'
 import { AxiosResponse } from 'axios'
 import axiosClient from 'axios'
@@ -18,8 +18,6 @@ export const useUpdateTask = (): UseBaseMutationResult<
   Task,
   unknown
 > => {
-  const queryClient = useQueryClient()
-
   return useMutation({
     mutationFn: (task: Task) => updateTask(task),
   })

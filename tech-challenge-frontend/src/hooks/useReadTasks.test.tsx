@@ -1,3 +1,4 @@
+import React from 'react'
 import { renderHook, waitFor } from '@testing-library/react'
 import { describe, it, expect, vi } from 'vitest'
 import { Task, Status } from '../types'
@@ -9,6 +10,7 @@ import axios from 'axios'
 const createWrapper = () => {
   const queryClient = new QueryClient()
 
+  // eslint-disable-next-line react/display-name
   return ({ children }) => (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   )

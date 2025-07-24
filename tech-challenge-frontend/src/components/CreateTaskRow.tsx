@@ -1,3 +1,4 @@
+import React from 'react'
 import { useState } from 'react'
 import { Status, Task } from '../types'
 
@@ -20,15 +21,12 @@ export const CreateTaskRow = ({ createTask }: Props) => {
 
   const [formData, setFormData] = useState(emptyFormData)
 
-  const handleChange = (e: { target: { name: any; value: any } }) => {
+  const handleChange = (e: { target: { name: string; value: string } }) => {
     const { name, value } = e.target
     setFormData((prevState) => ({ ...prevState, [name]: value }))
   }
 
-  const handleSubmit = (
-    event: React.MouseEvent<HTMLButtonElement>,
-    value?: boolean
-  ) => {
+  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
 
     const newTask: Task = {

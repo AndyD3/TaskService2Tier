@@ -9,7 +9,7 @@ const deleteTask = async (taskID: number): Promise<AxiosResponse<Task[]>> => {
 }
 
 export const useDeleteTask = (): UseBaseMutationResult<
-  AxiosResponse<Task[], any>,
+  AxiosResponse<Task[], unknown>,
   unknown,
   number,
   unknown

@@ -36,3 +36,9 @@ You can prettify the code with
 ```
 npm run format
 ```
+
+You can lint the code with
+
+```
+npm run lint
+```
